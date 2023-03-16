@@ -22,7 +22,7 @@ def get_time(s):
     return t
 
 
-st.title("Music Report for Hindenburg")
+st.title(":red[Music Report for Hindenburg]")
 st.markdown(
     """
 **Paste your music report från Hindenburg in the field below to
