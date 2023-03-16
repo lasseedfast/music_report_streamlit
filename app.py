@@ -19,7 +19,7 @@ def get_time(s):
     elif s >=60:
         t = f'{minutes}:{seconds}'
     else:
-        t= f'{seconds}'
+        t= f'0:{seconds}'
     return t
 
 st.title("Music Report for Hindenburg")
