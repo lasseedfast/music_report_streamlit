@@ -8,16 +8,19 @@ def get_seconds(t):
     return int(t[: t.find(":")]) * 60 + int(t[t.find(":") + 1 :])
 
 def get_time(s):
-    h = int(s/3600)
-    m = int((s%3600)/60)
-    s = int((s%3600)%60)
-    if s >= 3600:
-        t = f'{h}:{m}:{s}'
-    elif s >=60:
-        t = f'{m:s}'
-    else:
-        t= f'{s}'
+    print(s)
+    print(type(s))
+    hours = int(s/3600)
+    minutes = int((s%3600)/60)
+    seconds = int((s%3600)%60)
 
+    if s >= 3600:
+        t = f'{hours}:{minutes}:{seconds}'
+    elif s >=60:
+        t = f'{minutes}:{seconds}'
+    else:
+        t= f'{seconds}'
+    return t
 
 st.title("Music Report for Hindenburg")
 st.markdown(
@@ -60,9 +63,9 @@ if data:
                 "Duration": get_seconds(duration),
                 "Artist": l[3],
             }
-
     # Put data into a dataframe.
     df = pd.DataFrame.from_dict(d, orient="index")
+    df['Duration'] = df['Duration'].apply(lambda s: get_time(s))
     df["Title"] = df.index
     df.index = [i for i in range(1, df.shape[1] + 1)]
     # CSS to inject contained in a string
@@ -72,7 +75,7 @@ if data:
                 tbody th {display:none}
                 </style>
                 """
-    print(df)
+
     # Inject CSS with Markdown
     st.markdown(hide_table_row_index, unsafe_allow_html=True)
 
