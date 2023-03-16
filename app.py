@@ -7,20 +7,20 @@ def get_seconds(t):
     """Translates duration to seconds"""
     return int(t[: t.find(":")]) * 60 + int(t[t.find(":") + 1 :])
 
-def get_time(s):
-    print(s)
-    print(type(s))
-    hours = int(s/3600)
-    minutes = int((s%3600)/60)
-    seconds = int((s%3600)%60)
 
+def get_time(s):
+    """Takes duration in seconds and return it as h:m:s."""
+    hours = int(s / 3600)
+    minutes = int((s % 3600) / 60)
+    seconds = int((s % 3600) % 60)
     if s >= 3600:
-        t = f'{hours}:{minutes}:{seconds}'
-    elif s >=60:
-        t = f'{minutes}:{seconds}'
+        t = f"{hours}:{minutes}:{seconds}"
+    elif s >= 60:
+        t = f"{minutes}:{seconds}"
     else:
-        t= f'0:{seconds}'
+        t = f"0:{seconds}"
     return t
+
 
 st.title("Music Report for Hindenburg")
 st.markdown(
@@ -43,7 +43,7 @@ if data:
     # Dict to fill with info
     d = {}
 
-    # Get data into dict
+    # Get data into dict.
     for row in rows:
         l = row.split("\t")
         if len(l) < 3:  # Filter out empty rows
@@ -65,23 +65,14 @@ if data:
             }
     # Put data into a dataframe.
     df = pd.DataFrame.from_dict(d, orient="index")
-    df['Duration'] = df['Duration'].apply(lambda s: get_time(s))
+    df["Duration"] = df["Duration"].apply(lambda s: get_time(s))
     df["Title"] = df.index
     df.index = [i for i in range(1, df.shape[1] + 1)]
-    # CSS to inject contained in a string
-    hide_table_row_index = """
-                <style>
-                thead tr th:first-child {display:none}
-                tbody th {display:none}
-                </style>
-                """
-
-    # Inject CSS with Markdown
-    st.markdown(hide_table_row_index, unsafe_allow_html=True)
 
     # Display as dataframe.
     st.dataframe(df[["Title", "Artist", "Duration"]])
 
+    # Let user download data as csv (with start times included).
     st.download_button(
         "Download as CSV",
         data=df[["Title", "Artist", "Duration", "Starts"]]
