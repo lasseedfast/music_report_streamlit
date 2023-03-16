@@ -25,9 +25,9 @@ def get_time(s):
 st.title(":red[Music Report for Hindenburg]")
 st.markdown(
     """
-**Paste your music report från Hindenburg in the field below to
-get a report with the total lenght of each song used. If you chose to download it
-you will get a CSV where you find the start time for each music clip in the report.**
+**Paste your music report from Hindenburg in the field below to get a 
+report with the total length of each song used. If you choose to 
+download it you will get a CSV where you find the start time for each music clip in the report.**
 """
 )
 # Get data from clipboard
